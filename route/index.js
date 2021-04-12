@@ -14,6 +14,4 @@ router.put("/complete/task/:id", task.CompleteTask);
 // delete task
 router.delete("/delete/task/:id", task.DeleteTask);
 
-router.delete("/tasks/del", task.Deleteall);
-
 module.exports = router;

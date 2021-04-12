@@ -2,9 +2,8 @@ const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
 
 const taskSchema = new Schema({
-  taskname: { type: String },
+  taskname: { type: String, required: true },
   complete: { type: Boolean, default: false },
-  // savedtask: [{ type: Schema.Types.ObjectId, ref: "SavedTask" }],
 });
 
 module.exports = Mongoose.model("Task", taskSchema);

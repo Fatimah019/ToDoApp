@@ -9,9 +9,9 @@ export default class ToDo extends Component {
     this.state = {
       taskname: "",
       tasks: "",
-      statusMessage: "",
-      complete: false,
-      taskcompleted: false,
+      color: "#000",
+      textDecoration: "none",
+      textDecorationColor: "transparent",
     };
   }
 
@@ -24,28 +24,19 @@ export default class ToDo extends Component {
 
   // method to add a task
   addTask = (e) => {
+    e.preventDefault();
     let taskform = { taskname: this.state.taskname };
     axios
       .post("/new/task", taskform)
       .then((res) => {
-        if (res.data.status === false) {
-          this.setState({
-            statusMessage: res.data.message,
-          });
-        } else {
-          this.setState({
-            statusMessage: "Task Successfully Added",
-          });
-        }
         this.setState({
           name: "",
         });
+        window.location.reload(false);
       })
       .catch((err) => {
         toast.error(err);
       });
-    window.location.reload(false);
-    e.preventDefault();
   };
 
   // get all tasks created
@@ -80,16 +71,7 @@ export default class ToDo extends Component {
     axios
       .put(`/complete/task/${id}`)
       .then((res) => {
-        console.log(res.data.data);
-        if (res.data.data.complete === true) {
-          this.setState({
-            complete: true,
-          });
-        } else {
-          this.setState({
-            complete: false,
-          });
-        }
+        window.location.reload(false);
       })
       .catch((err) => {
         toast.error(err);
@@ -100,10 +82,11 @@ export default class ToDo extends Component {
     this.getAllTasks();
   }
   render() {
-    const delBtnStatus =
-      this.state.completionStatus === "grey"
-        ? { display: "none" }
-        : { display: "inline" };
+    const style = {
+      color: this.state.color,
+      textDecoration: this.state.textDecoration,
+      textDecorationColor: this.state.textDecorationColor,
+    };
     return (
       <div className="todo-container">
         <div className="list-container">
@@ -138,7 +121,6 @@ export default class ToDo extends Component {
                   className="add-btn"
                 />
               </label>
-              <div className="status-msg">{this.state.statusMessage}</div>
             </form>
             <ul>
               {this.state.tasks.length === 0 ? (
@@ -152,24 +134,24 @@ export default class ToDo extends Component {
                     <li
                       key={task._id}
                       className="flex space-between align-center task-list"
+                      onClick={() => this.onCompleteTask(task._id)}
                     >
                       <p
-                        onClick={() => this.onCompleteTask(task._id)}
-                        className={
-                          this.state.complete && savedItem === task._id
-                            ? "complete"
-                            : "incomplete"
+                        style={
+                          task.complete === true
+                            ? { color: "grey", textDecoration: "line-through" }
+                            : { color: "#000" }
                         }
                       >
                         {task.taskname}
                       </p>
                       <button
-                        className={
-                          this.state.complete && savedItem === task._id
-                            ? "remove-btn-complete"
-                            : "remove-btn"
+                        className="remove-btn"
+                        style={
+                          task.complete === true
+                            ? { display: "none" }
+                            : { display: "inline" }
                         }
-                        // style={delBtnStatus}
                         onClick={() => this.deleteTask(task._id)}
                       >
                         Remove
