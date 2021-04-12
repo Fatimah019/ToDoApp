@@ -51,7 +51,7 @@ export default class ToDo extends Component {
   // get all tasks created
   getAllTasks = () => {
     axios
-      .get("/tasks")
+      .post("/tasks")
       .then((res) => {
         this.setState({
           tasks: res.data.data,

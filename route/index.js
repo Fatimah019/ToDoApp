@@ -6,16 +6,13 @@ const task = require("../controller");
 router.post("/new/task", task.NewTask);
 
 // get tasks
-router.get("/tasks", task.GetAllTasks);
+router.post("/tasks", task.GetAllTasks);
 
 // saved finished task
 router.put("/complete/task/:id", task.CompleteTask);
 
 // delete task
 router.delete("/delete/task/:id", task.DeleteTask);
-
-// get finished tasks
-// router.get("/finished/tasks", task.GetFinishedTasks);
 
 router.delete("/tasks/del", task.Deleteall);
 
