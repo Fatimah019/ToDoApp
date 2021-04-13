@@ -8,7 +8,7 @@ export default class ToDo extends Component {
     super(props);
     this.state = {
       taskname: "",
-      tasks: "",
+      tasks: [],
       color: "#000",
       textDecoration: "none",
       textDecorationColor: "transparent",
@@ -28,7 +28,7 @@ export default class ToDo extends Component {
     let taskform = { taskname: this.state.taskname };
     axios
       .post("/new/task", taskform)
-      .then((res) => {
+      .then(() => {
         this.setState({
           name: "",
         });
@@ -67,10 +67,9 @@ export default class ToDo extends Component {
 
   // on completing a task
   onCompleteTask = (id) => {
-    localStorage.setItem("saved_task", id);
     axios
       .put(`/complete/task/${id}`)
-      .then((res) => {
+      .then(() => {
         window.location.reload(false);
       })
       .catch((err) => {
@@ -103,25 +102,27 @@ export default class ToDo extends Component {
             className="toast-container"
           />
           <div className="list-container-inner">
-            <p className="todo-title">To Do</p>
-            <form method="post" onSubmit={this.addTask}>
-              <label className="flex space-between align-center">
-                <input
-                  type="text"
-                  placeholder="What needs to be done?"
-                  name="name"
-                  onChange={this.handleInputChange}
-                  value={this.state.taskname}
-                  className="task-input"
-                />
-                <input
-                  type="submit"
-                  placeholder="What needs to be done?"
-                  value="Add"
-                  className="add-btn"
-                />
-              </label>
-            </form>
+            <div className="heading-todo">
+              <p className="todo-title">To Do</p>
+              <form method="post" onSubmit={this.addTask}>
+                <label className="flex space-between align-center">
+                  <input
+                    type="text"
+                    placeholder="What needs to be done?"
+                    name="name"
+                    onChange={this.handleInputChange}
+                    value={this.state.taskname}
+                    className="task-input"
+                  />
+                  <input
+                    type="submit"
+                    placeholder="What needs to be done?"
+                    value="Add"
+                    className="add-btn"
+                  />
+                </label>
+              </form>
+            </div>
             <ul>
               {this.state.tasks.length === 0 ? (
                 <div className="text-center">
@@ -129,7 +130,6 @@ export default class ToDo extends Component {
                 </div>
               ) : (
                 this.state.tasks.map((task) => {
-                  let savedItem = localStorage.getItem("saved_task", task._id);
                   return (
                     <li
                       key={task._id}
@@ -145,17 +145,29 @@ export default class ToDo extends Component {
                       >
                         {task.taskname}
                       </p>
-                      <button
-                        className="remove-btn"
-                        style={
-                          task.complete === true
-                            ? { display: "none" }
-                            : { display: "inline" }
-                        }
-                        onClick={() => this.deleteTask(task._id)}
-                      >
-                        Remove
-                      </button>
+                      <div>
+                        <button
+                          className="remove-btn"
+                          style={
+                            task.complete === true
+                              ? { display: "none" }
+                              : { display: "inline" }
+                          }
+                          onClick={() => this.deleteTask(task._id)}
+                        >
+                          Remove
+                        </button>
+                        <span
+                          className="complete-text"
+                          style={
+                            task.complete === true
+                              ? { display: "inline" }
+                              : { display: "none" }
+                          }
+                        >
+                          complete
+                        </span>
+                      </div>
                     </li>
                   );
                 })

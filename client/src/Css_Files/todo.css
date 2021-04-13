@@ -11,11 +11,19 @@
   justify-content: space-between;
 }
 .todo-container {
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #fff;
+}
+.heading-todo {
+  position: fixed;
+  width: 70%;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 .list-container {
   background-color: rgba(235, 233, 233, 0.3);
@@ -29,6 +37,12 @@
 .todo-title {
   font-weight: 800;
   font-size: 26px;
+}
+.heading-todo p,
+.heading-todo form {
+  margin: auto;
+  width: 90%;
+  margin-top: 20px;
 }
 .list-container-inner form label {
   background-color: #fff;
@@ -57,6 +71,10 @@
 .list-container-inner ul {
   padding: 0;
   margin: 0;
+  margin-top: 120px;
+  height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .list-container-inner ul li {
   padding: 5px 0px;
@@ -76,23 +94,6 @@
   border-radius: 4px;
   padding: 10px 20px;
 }
-
-@media screen and (max-width: 768px) {
-  .list-container {
-    width: 80%;
-  }
-}
-@media screen and (max-width: 600px) {
-  .list-container {
-    width: 90%;
-  }
-}
-@media screen and (max-width: 480px) {
-  .list-container {
-    width: 95%;
-  }
-}
-
 .remove-btn-complete {
   display: none;
 }
@@ -103,4 +104,27 @@
 }
 .incomplete {
   color: #000;
+}
+.complete-text {
+  display: none;
+  color: grey;
+  font-weight: bolder;
+}
+@media screen and (max-width: 768px) {
+  .list-container,
+  .heading-todo {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .list-container,
+  .heading-todo {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .list-container,
+  .heading-todo {
+    width: 95%;
+  }
 }

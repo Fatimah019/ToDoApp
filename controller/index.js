@@ -86,20 +86,3 @@ exports.DeleteTask = async (req, res) => {
       });
     });
 };
-
-// get finished tasks
-// exports.GetFinishedTasks = (req, res) => {
-//   SavedTask.find()
-//     .then((finishedtasks) => {
-//       return res.json({
-//         status: true,
-//         data: finishedtasks,
-//       });
-//     })
-//     .catch((err) => {
-//       return res.json({
-//         status: false,
-//         message: `Cannot Get Task ${err}`,
-//       });
-//     });
-// };
